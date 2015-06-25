@@ -39,7 +39,7 @@
         if(self.testWithAutoCompleteObjectsInsteadOfStrings){
             completions = [self allCountryObjects];
         } else {
-            completions = [self allCountries];
+            completions = [self ytSuggestions:string];
         }
         
         handler(completions);
@@ -70,6 +70,18 @@
 
 - (NSArray *)allCountryObjects
 {
+    
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=firefox&hjson=t&cp=1&q=santhanam&key=AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg&alt=json&callback=?"]];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLResponse *requestResponse;
+    NSData *requestHandler = [NSURLConnection sendSynchronousRequest:request returningResponse:&requestResponse error:nil];
+    
+    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSASCIIStringEncoding];
+    NSLog(@"requestReply: %@", requestReply);
+
     if(!self.countryObjects){
         NSArray *countryNames = [self allCountries];
         NSMutableArray *mutableCountries = [NSMutableArray new];
@@ -84,9 +96,47 @@
     return self.countryObjects;
 }
 
+- (NSArray *)ytSuggestions:(NSString *)query
+{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    NSString *url = [NSString stringWithFormat:@"http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=firefox&hjson=t&cp=1&q=%@&key=AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg&alt=json&callback=?",query];
+    [request setURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLResponse *requestResponse;
+    NSData *requestHandler = [NSURLConnection sendSynchronousRequest:request returningResponse:&requestResponse error:nil];
+    
+    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSASCIIStringEncoding];
+    NSLog(@"requestReply: %@", requestReply);
+    
+    NSArray *jsonArray=[NSJSONSerialization JSONObjectWithData:requestHandler options:0 error:nil];
 
+    NSArray * ytArray = [[NSMutableArray alloc] initWithArray:[jsonArray objectAtIndex:1]];  //your json string
+    
+    
+   /* jstring = [jstring stringByReplacingOccurrencesOfString:@"[" withString:@""];
+    jstring = [jstring stringByReplacingOccurrencesOfString:@"]" withString:@""];
+    
+    NSArray * ytArray = [jstring componentsSeparatedByString:@","];
+    */
+    NSLog(@"requestReply: %@", ytArray);
+    return ytArray;
+
+
+    
+}
 - (NSArray *)allCountries
 {
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=firefox&hjson=t&cp=1&q=santhanam&key=AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg&alt=json&callback=?"]];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLResponse *requestResponse;
+    NSData *requestHandler = [NSURLConnection sendSynchronousRequest:request returningResponse:&requestResponse error:nil];
+    
+    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSASCIIStringEncoding];
+    NSLog(@"requestReply: %@", requestReply);
+    
     NSArray *countries =
     @[
       @"Abkhazia",

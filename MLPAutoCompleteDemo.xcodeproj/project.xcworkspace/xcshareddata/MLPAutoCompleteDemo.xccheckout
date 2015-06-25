@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>A3847C46-35E5-4FE9-8566-1E1096A7B3AD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>MLPAutoCompleteDemo</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>38BAA13FE9127B52572359F2041DDF2C1CD49C4D</key>
 		<string>https://github.com/EddyBorja/MLPAutoCompleteTextField.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MLPAutoCompleteDemo.xcodeproj</string>
+	<string>MLPAutoCompleteDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>38BAA13FE9127B52572359F2041DDF2C1CD49C4D</key>

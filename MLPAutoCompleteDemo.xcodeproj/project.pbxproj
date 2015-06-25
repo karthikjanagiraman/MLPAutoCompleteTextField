@@ -1808,7 +1808,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MLP;
-				LastTestingUpgradeCheck = 0510;
+				LastTestingUpgradeCheck = 0630;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Mainloop;
 			};
