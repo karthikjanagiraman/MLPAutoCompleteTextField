@@ -98,29 +98,27 @@
 
 - (NSArray *)ytSuggestions:(NSString *)query
 {
+    NSArray * ytArray = @[];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     NSString *url = [NSString stringWithFormat:@"http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=firefox&hjson=t&cp=1&q=%@&key=AI39si7ZLU83bKtKd4MrdzqcjTVI3DK9FvwJR6a4kB_SW_Dbuskit-mEYqskkSsFLxN5DiG1OBzdHzYfW0zXWjxirQKyxJfdkg&alt=json&callback=?",query];
+    url= [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"GET"];
-    
-    NSURLResponse *requestResponse;
+    [request setTimeoutInterval:1000.0f];
+    NSHTTPURLResponse *requestResponse;
+
     NSData *requestHandler = [NSURLConnection sendSynchronousRequest:request returningResponse:&requestResponse error:nil];
     
-    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSASCIIStringEncoding];
-    NSLog(@"requestReply: %@", requestReply);
-    
-    NSArray *jsonArray=[NSJSONSerialization JSONObjectWithData:requestHandler options:0 error:nil];
+    if ([requestResponse statusCode]==200) {
+        NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSASCIIStringEncoding];
+        
+        
+        NSArray *jsonArray=[NSJSONSerialization JSONObjectWithData:requestHandler options:0 error:nil];
+        ytArray = [[NSMutableArray alloc] initWithArray:[jsonArray objectAtIndex:1]];
 
-    NSArray * ytArray = [[NSMutableArray alloc] initWithArray:[jsonArray objectAtIndex:1]];  //your json string
-    
-    
-   /* jstring = [jstring stringByReplacingOccurrencesOfString:@"[" withString:@""];
-    jstring = [jstring stringByReplacingOccurrencesOfString:@"]" withString:@""];
-    
-    NSArray * ytArray = [jstring componentsSeparatedByString:@","];
-    */
-    NSLog(@"requestReply: %@", ytArray);
-    return ytArray;
+    }
+     return ytArray;
 
 
     
